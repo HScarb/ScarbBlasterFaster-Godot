@@ -1,0 +1,123 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://scenes/stars.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sprites/score.png" type="Texture" id=3]
+[ext_resource path="res://fonts/m5x7.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="GDScript" id=1]
+
+resource/name = "btn_start"
+script/source = "# btn_start (built-in)
+extends TextureButton
+
+func _ready():
+	connect(\"pressed\", self, \"_on_pressed\")
+	pass
+
+func _on_pressed():
+	get_tree().change_scene(game.STAGE_GAME)
+	pass"
+
+[sub_resource type="GDScript" id=2]
+
+resource/name = "btn_quit"
+script/source = "# btn_quit (built-in)
+extends TextureButton
+
+func _ready():
+	connect(\"pressed\", self, \"_on_pressed\")
+	pass
+
+func _on_pressed():
+	get_tree().quit()
+	pass"
+
+[sub_resource type="DynamicFont" id=3]
+
+font/size = 16
+font/use_mipmaps = false
+font/use_filter = false
+font/font = ExtResource( 4 )
+
+[sub_resource type="GDScript" id=4]
+
+resource/name = "lbl_score_best"
+script/source = "# lbl_score_best (built-in)
+extends Label
+
+func _ready():
+	set_text(str(game.score_best))
+	pass
+"
+
+[node name="world" type="Node"]
+
+[node name="stars" parent="." instance=ExtResource( 1 )]
+
+[node name="hud" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="btn_start" parent="hud" instance=ExtResource( 2 )]
+
+margin/left = 67.0
+margin/top = 134.0
+margin/right = 114.0
+margin/bottom = 150.0
+script/script = SubResource( 1 )
+
+[node name="label" parent="hud/btn_start"]
+
+text = "start"
+
+[node name="btn_quit" parent="hud" instance=ExtResource( 2 )]
+
+margin/left = 67.0
+margin/top = 155.0
+margin/right = 114.0
+margin/bottom = 171.0
+script/script = SubResource( 2 )
+
+[node name="label" parent="hud/btn_quit"]
+
+text = "quit"
+
+[node name="tex_score_best" type="TextureFrame" parent="hud"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 123.0
+margin/top = 10.0
+margin/right = 170.0
+margin/bottom = 30.0
+texture = ExtResource( 3 )
+stretch_mode = 0
+
+[node name="label" type="Label" parent="hud/tex_score_best"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 14.0
+custom_fonts/font = SubResource( 3 )
+text = "0"
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script/script = SubResource( 4 )
+
+
+[editable path="hud/btn_start"]
+[editable path="hud/btn_quit"]
